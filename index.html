@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Farcaster Registration</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #registrationForm { margin-top: 50px; }
+        input, button { padding: 10px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Farcaster Registration</h1>
+    <div id="registrationForm">
+        <button onclick="register()">Register with your Wallet</button>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        async function register() {
+            if (window.ethereum) {
+                try {
+                    const web3 = new Web3(window.ethereum);
+                    await window.ethereum.enable();
+
+                    const accounts = await web3.eth.getAccounts();
+                    const userAddress = accounts[0];
+
+                    // Display the user's address
+                    document.getElementById('status').innerText = 'Registered address: ' + userAddress;
+
+                    // Here, you would typically send the address to your backend or smart contract
+                } catch (error) {
+                    console.error('Error accessing wallet:', error);
+                    document.getElementById('status').innerText = 'Error accessing wallet. Please try again.';
+                }
+            } else {
+                alert('Please install MetaMask or another Ethereum-compatible browser extension.');
+            }
+        }
+    </script>
+</body>
+</html>
